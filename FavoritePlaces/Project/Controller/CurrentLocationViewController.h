@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CurrentLocationViewController.h
 //  FavoritePlaces
 //
 //  Created by 123 on 20.09.2018.
@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+NS_ASSUME_NONNULL_BEGIN
 
+@interface CurrentLocationViewController : UIViewController
 
 @end
 
+NS_ASSUME_NONNULL_END
