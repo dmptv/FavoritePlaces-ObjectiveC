@@ -7,8 +7,12 @@
 //
 
 #import "MapViewController.h"
+#import <MapKit/MapKit.h>
 
 @interface MapViewController ()
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
 
 @end
 
@@ -16,17 +20,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - Actions
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)showUser:(UIBarButtonItem *)sender {
 }
-*/
+
+- (IBAction)showLocations:(UIBarButtonItem *)sender {
+}
+
+
 
 @end
