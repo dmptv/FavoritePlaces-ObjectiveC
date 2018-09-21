@@ -10,23 +10,26 @@
 
 @interface CurrentLocationViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UIButton *tagButton;
+@property (weak, nonatomic) IBOutlet UIButton *getButton;
+@property (weak, nonatomic) IBOutlet UILabel *latitudeTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *longitudeTextLabel;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+
+
 @end
 
 @implementation CurrentLocationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
