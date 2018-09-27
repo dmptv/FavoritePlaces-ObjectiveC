@@ -49,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D24847921550F6E005D7B0D /* Sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sound.caf; sourceTree = "<group>"; };
 		9D934AC12153F455006F8DCC /* FavoritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavoritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D934AC42153F455006F8DCC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9D934AC52153F455006F8DCC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -190,6 +191,7 @@
 		9D934AFA2153FCDB006F8DCC /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				9D24847921550F6E005D7B0D /* Sound.caf */,
 			);
 			path = Sound;
 			sourceTree = "<group>";

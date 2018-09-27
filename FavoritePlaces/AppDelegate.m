@@ -16,8 +16,18 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    [self customizeAppearance];
+
     return YES;
+}
+
+- (void)customizeAppearance {
+    [UINavigationBar appearance].barTintColor = [UIColor blackColor];
+    [UINavigationBar appearance].titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont fontWithName:@"ArialMT" size:16.0], NSFontAttributeName, nil];
+    [UITabBar appearance].barTintColor = [UIColor blackColor];
+    UIColor * tintColor = [[UIColor alloc] initWithRed:255/255.0 green:238/255.0 blue:136/255.0 alpha:1.0];
+    [UITabBar appearance].tintColor = tintColor;
 }
 
 
