@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D248590215D2EBF005D7B0D /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D24858F215D2EBF005D7B0D /* Theme.xcassets */; };
 		9D934AC62153F455006F8DCC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D934AC52153F455006F8DCC /* AppDelegate.m */; };
 		9D934ACC2153F455006F8DCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D934ACA2153F455006F8DCC /* Main.storyboard */; };
 		9D934AD12153F457006F8DCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D934AD02153F457006F8DCC /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		9D24847921550F6E005D7B0D /* Sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sound.caf; sourceTree = "<group>"; };
+		9D24858F215D2EBF005D7B0D /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
 		9D934AC12153F455006F8DCC /* FavoritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavoritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D934AC42153F455006F8DCC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9D934AC52153F455006F8DCC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				9D934AFB2153FCEC006F8DCC /* Project */,
 				9D934ACA2153F455006F8DCC /* Main.storyboard */,
 				9D934AD02153F457006F8DCC /* Assets.xcassets */,
+				9D24858F215D2EBF005D7B0D /* Theme.xcassets */,
 				9D934AD22153F457006F8DCC /* LaunchScreen.storyboard */,
 				9D934AD52153F457006F8DCC /* Info.plist */,
 				9D934AD62153F457006F8DCC /* main.m */,
@@ -370,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D934AD42153F457006F8DCC /* LaunchScreen.storyboard in Resources */,
+				9D248590215D2EBF005D7B0D /* Theme.xcassets in Resources */,
 				9D934AD12153F457006F8DCC /* Assets.xcassets in Resources */,
 				9D934ACC2153F455006F8DCC /* Main.storyboard in Resources */,
 			);

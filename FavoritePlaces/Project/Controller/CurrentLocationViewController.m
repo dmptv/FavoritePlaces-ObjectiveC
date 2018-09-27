@@ -35,20 +35,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+
     
-    
-//    [self makeLogoButton];
     [self updateLabels];
     
 }
 
+#pragma mark - Helpers
+
 - (void) makeLogoButton {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:[UIImage imageNamed:@"Logo"] forState:UIControlStateNormal];
+    UIImage* image = [[UIImage imageNamed:@"Logo"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    button.tintColor = [UIColor colorNamed:@"tabbarTintcolor"];
+    [button setBackgroundImage:image forState:UIControlStateNormal];
     [button sizeToFit];
-    [button addTarget:self
-                        action:@selector(getLocation:)
+    [button addTarget:self action:@selector(getLocation:)
               forControlEvents:UIControlEventTouchUpInside];
     button.center = CGPointMake(CGRectGetMidX(self.view.bounds), 220.0);
     [self.view addSubview:button];
@@ -56,28 +57,48 @@
     self.logoButton = button;
 }
 
+#pragma mark - Methods
+
 - (void) updateLabels {
-    
     [self showLogoView];
+    
 }
 
 - (void) showLogoView {
-    
     if (!self.logoVisible) {
         self.logoVisible = YES;
         self.containerView.hidden = YES;
         if (!self.logoButton) {
             [self makeLogoButton];
         }
-        
     }
+}
+
+- (void) hideLogoView {
+    if (!self.logoVisible) { return; }
+    self.logoVisible = NO;
+    
+    // containerView is placed outside the screen and moved to the center
+    self.containerView.hidden = NO;
+    CGFloat x = CGRectGetWidth(self.view.bounds) * 2.0;
+    CGFloat y = 40 + CGRectGetHeight(self.view.bounds) / 2.0;
+    CGPoint center = CGPointMake(x, y);
+    self.containerView.center = center;
+    
+    
+    //let centerX = view.bounds.midX
     
 }
 
+#pragma mark - Actions
 
 - (IBAction) getLocation:(id)sender {
     
-    NSLog(@"get location called");
+    if (self.logoVisible) {
+        [self hideLogoView];
+    }
+    
+    
     
 }
 
