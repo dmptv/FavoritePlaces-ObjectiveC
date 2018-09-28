@@ -14,7 +14,7 @@
 #import "UIViewController+Alert.h"
 
 
-@interface CurrentLocationViewController () <CAAnimationDelegate>
+@interface CurrentLocationViewController () <CLLocationManagerDelegate, CAAnimationDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
@@ -26,9 +26,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *longitudeTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
+// animation logo
 @property (weak, nonatomic) UIButton *logoButton;
 @property (assign, nonatomic) BOOL logoVisible;
 
+// location
+@property (strong, nonatomic) CLLocationManager* locationManager;
+@property (strong, nonatomic) CLLocation* location;
+@property (assign, nonatomic) BOOL updatingLocation;
+@property (strong, nonatomic) NSError* lastLocationError;
 
 @end
 
@@ -38,6 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.locationManager = [[CLLocationManager alloc] init];
     
     [self updateLabels];
     
@@ -102,10 +109,32 @@
     [self.logoButton.layer addAnimation:logoRotator forKey:@"logoRotator"];
 }
 
+
 #pragma mark - Methods
 
 - (void) updateLabels {
-    [self showLogoView];
+    
+    if (self.location) {
+        
+        NSLog(@"1");
+        
+    } else {
+        
+        if (self.lastLocationError) {
+            
+            NSLog(@"2");
+            
+        } else if (![CLLocationManager locationServicesEnabled]) {
+            NSLog(@"3");
+            
+        } else if (self.updatingLocation) {
+            NSLog(@"4");
+        } else {
+            NSLog(@"5");
+            
+            [self showLogoView];
+        }
+    }
     
 }
 
@@ -138,10 +167,110 @@
 
 - (IBAction) getLocation:(id)sender {
     
+    CLAuthorizationStatus authStatus = [CLLocationManager authorizationStatus];
+    
     if (self.logoVisible) {
         [self hideLogoView];
     }
+    
+    if (authStatus == kCLAuthorizationStatusNotDetermined) {
+        [self.locationManager requestWhenInUseAuthorization];
+        return;
+    }
+    
+    if ((authStatus == kCLAuthorizationStatusDenied) ||
+        (authStatus == kCLAuthorizationStatusRestricted)) {
+        [self showAlertWithTitle:@"Location Services Disabled"
+                      andMessage:@"Please enable location services for this app in Settings."];
+        return;
+    }
+
+    
+    
  
+}
+
+- (void) startLocationManager {
+    
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error {
+    NSLog(@"didFailWithError %@", error.description);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    NSLog(@"didUpdateLocations %@", locations.lastObject);
+
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+       didUpdateHeading:(CLHeading *)newHeading {
+    NSLog(@"didUpdateHeading %@", newHeading);
+}
+
+- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager {
+    NSLog(@"locationManagerShouldDisplayHeadingCalibration ");
+
+    return YES;
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+        didRangeBeacons:(NSArray<CLBeacon *> *)beacons {
+    NSLog(@"didRangeBeacons %@", beacons);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region
+              withError:(NSError *)error {
+    NSLog(@"rangingBeaconsDidFailForRegion %@", error.description);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+         didEnterRegion:(CLRegion *)region {
+     NSLog(@"didEnterRegion %@", region);
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager
+          didExitRegion:(CLRegion *)region {
+    
+    NSLog(@"didExitRegion %@", region);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+monitoringDidFailForRegion:(nullable CLRegion *)region
+              withError:(NSError *)error {
+    NSLog(@"monitoringDidFailForRegion %@", error.description);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    NSLog(@"didChangeAuthorizationStatus %d", status);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+didStartMonitoringForRegion:(CLRegion *)region {
+    NSLog(@"didStartMonitoringForRegion %@", region);
+}
+
+- (void)locationManagerDidPauseLocationUpdates:(CLLocationManager *)manager {
+    NSLog(@"locationManagerDidPauseLocationUpdates");
+}
+
+- (void)locationManagerDidResumeLocationUpdates:(CLLocationManager *)manager {
+    NSLog(@"locationManagerDidResumeLocationUpdates");
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+didFinishDeferredUpdatesWithError:(nullable NSError *)error {
+    NSLog(@"didFinishDeferredUpdatesWithError %@", error.description);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didVisit:(CLVisit *)visit {
+    NSLog(@"visit: %@", visit);
 }
 
 #pragma mark - CAAnimationDelegate
@@ -154,6 +283,7 @@
     [self.logoButton.layer removeAllAnimations];
     [self.logoButton removeFromSuperview];
 }
+
 
 
 

@@ -144,6 +144,7 @@
 				9D934ADF2153F457006F8DCC /* FavoritePlacesTests */,
 				9D934AEA2153F457006F8DCC /* FavoritePlacesUITests */,
 				9D934AC22153F455006F8DCC /* Products */,
+				9DD3F520215E3E26009A9DA0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -302,6 +303,13 @@
 			path = VariousTestsWithCode;
 			sourceTree = "<group>";
 		};
+		9DD3F520215E3E26009A9DA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -369,6 +377,11 @@
 				TargetAttributes = {
 					9D934AC02153F455006F8DCC = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					9D934ADB2153F457006F8DCC = {
 						CreatedOnToolsVersion = 10.0;
