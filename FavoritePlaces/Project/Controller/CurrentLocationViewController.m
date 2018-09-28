@@ -45,9 +45,8 @@
 
 - (void) makeLogoButton {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage* image = [[UIImage imageNamed:@"Logo"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     button.tintColor = [UIColor colorNamed:@"tabbarTintcolor"];
-    [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"Logo"] forState:UIControlStateNormal];
     [button sizeToFit];
     [button addTarget:self action:@selector(getLocation:)
               forControlEvents:UIControlEventTouchUpInside];
@@ -55,6 +54,46 @@
     [self.view addSubview:button];
     
     self.logoButton = button;
+}
+
+- (void) setContainerViewAnimation {
+    self.containerView.hidden = NO;
+    CGFloat x = CGRectGetWidth(self.view.bounds) * 2.0;
+    CGFloat y = 40 + CGRectGetHeight(self.containerView.bounds) / 2.0;
+    self.containerView.center = CGPointMake(x, y);
+    CGFloat centerX = CGRectGetMidX(self.view.bounds);
+    CABasicAnimation* panelMover = [CABasicAnimation animationWithKeyPath:@"position"];
+    [panelMover setRemovedOnCompletion:NO]; // try YES
+    panelMover.fillMode = kCAFillModeForwards; // kCAFillModeRemoved
+    panelMover.duration = 0.6;
+    panelMover.fromValue = [NSValue valueWithCGPoint:self.containerView.center];
+    panelMover.toValue = [NSValue valueWithCGPoint:CGPointMake(centerX, self.containerView.center.y)];
+    panelMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    __weak id weakSelf = self;
+    [panelMover setDelegate:weakSelf];
+    [self.containerView.layer addAnimation:panelMover forKey:@"panelMover"];
+}
+
+- (void) logoButtonSlideOutAnimation {
+    CABasicAnimation* logoMover = [CABasicAnimation animationWithKeyPath:@"position"];
+    [logoMover setRemovedOnCompletion:NO];
+    logoMover.fillMode = kCAFillModeForwards;
+    logoMover.duration = 0.5;
+    logoMover.fromValue = [NSValue valueWithCGPoint:self.logoButton.center];
+    logoMover.toValue = [NSValue valueWithCGPoint:CGPointMake(-CGRectGetMidX(self.view.bounds), self.logoButton.center.y)];
+    logoMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.logoButton.layer addAnimation:logoMover forKey:@"logoMover"];
+}
+
+- (void) logoButtonRotateOutAnimation {
+    CABasicAnimation* logoRotator = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    [logoRotator setRemovedOnCompletion:NO];
+    logoRotator.fillMode = kCAFillModeForwards;
+    logoRotator.duration = 0.5;
+    logoRotator.fromValue = @0.0;
+    logoRotator.toValue = @(M_PI * (-2));
+    logoRotator.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.logoButton.layer addAnimation:logoRotator forKey:@"logoRotator"];
 }
 
 #pragma mark - Methods
@@ -79,15 +118,13 @@
     self.logoVisible = NO;
     
     // containerView is placed outside the screen and moved to the center
-    self.containerView.hidden = NO;
-    CGFloat x = CGRectGetWidth(self.view.bounds) * 2.0;
-    CGFloat y = 40 + CGRectGetHeight(self.view.bounds) / 2.0;
-    CGPoint center = CGPointMake(x, y);
-    self.containerView.center = center;
+    [self setContainerViewAnimation];
     
+    // logo button slides out of the screen
+    [self logoButtonSlideOutAnimation];
     
-    //let centerX = view.bounds.midX
-    
+    // at the same time rotates around its center, giving impression that it’s rolling away
+    [self logoButtonRotateOutAnimation];
 }
 
 #pragma mark - Actions
