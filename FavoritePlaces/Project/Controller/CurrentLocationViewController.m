@@ -11,6 +11,8 @@
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "UIViewController+Alert.h"
+
 
 @interface CurrentLocationViewController () <CAAnimationDelegate>
 
@@ -115,6 +117,7 @@
             [self makeLogoButton];
         }
     }
+    
 }
 
 - (void) hideLogoView {
@@ -138,9 +141,7 @@
     if (self.logoVisible) {
         [self hideLogoView];
     }
-    
-    
-    
+ 
 }
 
 #pragma mark - CAAnimationDelegate
