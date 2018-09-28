@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
 
-@interface CurrentLocationViewController ()
+@interface CurrentLocationViewController () <CAAnimationDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
@@ -62,15 +62,17 @@
     CGFloat y = 40 + CGRectGetHeight(self.containerView.bounds) / 2.0;
     self.containerView.center = CGPointMake(x, y);
     CGFloat centerX = CGRectGetMidX(self.view.bounds);
+    
     CABasicAnimation* panelMover = [CABasicAnimation animationWithKeyPath:@"position"];
-    [panelMover setRemovedOnCompletion:NO]; // try YES
-    panelMover.fillMode = kCAFillModeForwards; // kCAFillModeRemoved
+    [panelMover setRemovedOnCompletion:NO];
+    panelMover.fillMode = kCAFillModeForwards;
     panelMover.duration = 0.6;
     panelMover.fromValue = [NSValue valueWithCGPoint:self.containerView.center];
     panelMover.toValue = [NSValue valueWithCGPoint:CGPointMake(centerX, self.containerView.center.y)];
     panelMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     __weak id weakSelf = self;
     [panelMover setDelegate:weakSelf];
+    
     [self.containerView.layer addAnimation:panelMover forKey:@"panelMover"];
 }
 
@@ -82,6 +84,7 @@
     logoMover.fromValue = [NSValue valueWithCGPoint:self.logoButton.center];
     logoMover.toValue = [NSValue valueWithCGPoint:CGPointMake(-CGRectGetMidX(self.view.bounds), self.logoButton.center.y)];
     logoMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
     [self.logoButton.layer addAnimation:logoMover forKey:@"logoMover"];
 }
 
@@ -93,6 +96,7 @@
     logoRotator.fromValue = @0.0;
     logoRotator.toValue = @(M_PI * (-2));
     logoRotator.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
     [self.logoButton.layer addAnimation:logoRotator forKey:@"logoRotator"];
 }
 
@@ -138,6 +142,19 @@
     
     
 }
+
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    
+    [self.containerView.layer removeAllAnimations];
+    self.containerView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2, 40.0 + CGRectGetHeight(self.containerView.bounds) / 2.0);
+    
+    [self.logoButton.layer removeAllAnimations];
+    [self.logoButton removeFromSuperview];
+}
+
+
 
 
 @end

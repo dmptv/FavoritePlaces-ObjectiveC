@@ -30,6 +30,10 @@
 		9D934B2A21540158006F8DCC /* NSString+AddText.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D934B2921540158006F8DCC /* NSString+AddText.m */; };
 		9D934B2D21540189006F8DCC /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D934B2C21540189006F8DCC /* ModelController.m */; };
 		9D934B30215401EB006F8DCC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D934B2E215401EB006F8DCC /* DataModel.xcdatamodeld */; };
+		9DD3F512215E1975009A9DA0 /* MyClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F511215E1975009A9DA0 /* MyClass.m */; };
+		9DD3F515215E208F009A9DA0 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F514215E208F009A9DA0 /* Constants.m */; };
+		9DD3F518215E2A1C009A9DA0 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F517215E2A1C009A9DA0 /* Person.m */; };
+		9DD3F51C215E2A46009A9DA0 /* CreditCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F51B215E2A46009A9DA0 /* CreditCard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +99,14 @@
 		9D934B2B21540189006F8DCC /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
 		9D934B2C21540189006F8DCC /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
 		9D934B2F215401EB006F8DCC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		9DD3F510215E1975009A9DA0 /* MyClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyClass.h; sourceTree = "<group>"; };
+		9DD3F511215E1975009A9DA0 /* MyClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyClass.m; sourceTree = "<group>"; };
+		9DD3F513215E208F009A9DA0 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		9DD3F514215E208F009A9DA0 /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		9DD3F516215E2A1C009A9DA0 /* Person.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		9DD3F517215E2A1C009A9DA0 /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		9DD3F51A215E2A46009A9DA0 /* CreditCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreditCard.h; sourceTree = "<group>"; };
+		9DD3F51B215E2A46009A9DA0 /* CreditCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreditCard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +159,7 @@
 			children = (
 				9D934AC42153F455006F8DCC /* AppDelegate.h */,
 				9D934AC52153F455006F8DCC /* AppDelegate.m */,
+				9DD3F519215E2A26009A9DA0 /* VariousTestsWithCode */,
 				9D934AF92153FCB6006F8DCC /* CustomNavigationControllers */,
 				9D934AFA2153FCDB006F8DCC /* Sound */,
 				9D934AFB2153FCEC006F8DCC /* Project */,
@@ -237,6 +250,8 @@
 				9D934B2621540085006F8DCC /* UIImage+Resize.m */,
 				9D934B2821540158006F8DCC /* NSString+AddText.h */,
 				9D934B2921540158006F8DCC /* NSString+AddText.m */,
+				9DD3F513215E208F009A9DA0 /* Constants.h */,
+				9DD3F514215E208F009A9DA0 /* Constants.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -267,6 +282,19 @@
 				9D934B1A2153FF2E006F8DCC /* LocationCell.m */,
 			);
 			path = "Location View";
+			sourceTree = "<group>";
+		};
+		9DD3F519215E2A26009A9DA0 /* VariousTestsWithCode */ = {
+			isa = PBXGroup;
+			children = (
+				9DD3F510215E1975009A9DA0 /* MyClass.h */,
+				9DD3F511215E1975009A9DA0 /* MyClass.m */,
+				9DD3F516215E2A1C009A9DA0 /* Person.h */,
+				9DD3F517215E2A1C009A9DA0 /* Person.m */,
+				9DD3F51A215E2A46009A9DA0 /* CreditCard.h */,
+				9DD3F51B215E2A46009A9DA0 /* CreditCard.m */,
+			);
+			path = VariousTestsWithCode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,7 +428,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DD3F512215E1975009A9DA0 /* MyClass.m in Sources */,
 				9D934B122153FE9B006F8DCC /* CategoryPickerViewController.m in Sources */,
+				9DD3F518215E2A1C009A9DA0 /* Person.m in Sources */,
 				9D934AC62153F455006F8DCC /* AppDelegate.m in Sources */,
 				9D934AD72153F457006F8DCC /* main.m in Sources */,
 				9D934B1E2153FF45006F8DCC /* MapViewController.m in Sources */,
@@ -409,6 +439,7 @@
 				9D934B032153FD9F006F8DCC /* MyTabBarControllerViewController.m in Sources */,
 				9D934B2D21540189006F8DCC /* ModelController.m in Sources */,
 				9D934B152153FEBB006F8DCC /* LocationDetailsViewController.m in Sources */,
+				9DD3F51C215E2A46009A9DA0 /* CreditCard.m in Sources */,
 				9D934B062153FDD7006F8DCC /* MyNavigationController.m in Sources */,
 				9D934B182153FF14006F8DCC /* LocationsViewController.m in Sources */,
 				9D934B0C2153FE6E006F8DCC /* CurrentLocationViewController.m in Sources */,
@@ -417,6 +448,7 @@
 				9D934B2721540085006F8DCC /* UIImage+Resize.m in Sources */,
 				9D934B2A21540158006F8DCC /* NSString+AddText.m in Sources */,
 				9D934B212153FF77006F8DCC /* Functions.m in Sources */,
+				9DD3F515215E208F009A9DA0 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
