@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *longitudeTextLabel;
 
 - (void) setAnimationInSuperView:(UIView*) superView;
+- (void) spinnerWithTag:(NSUInteger) tag;
 
 @end
 

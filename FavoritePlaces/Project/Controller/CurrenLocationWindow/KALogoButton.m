@@ -7,6 +7,11 @@
 //
 
 #import "KALogoButton.h"
+#import <QuartzCore/QuartzCore.h>
+
+@interface KALogoButton () <CAAnimationDelegate>
+
+@end
 
 @implementation KALogoButton
 
@@ -30,7 +35,8 @@
     logoMover.fromValue = [NSValue valueWithCGPoint:self.center];
     logoMover.toValue = [NSValue valueWithCGPoint:CGPointMake(-CGRectGetMidX(superview.bounds), self.center.y)];
     logoMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
+    __weak id weakSelf = self;
+    [logoMover setDelegate:weakSelf];
     [self.layer addAnimation:logoMover forKey:@"logoMover"];
 }
 
@@ -42,8 +48,14 @@
     logoRotator.fromValue = @0.0;
     logoRotator.toValue = @(M_PI * (-2));
     logoRotator.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
     [self.layer addAnimation:logoRotator forKey:@"logoRotator"];
+}
+
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    [self.layer removeAllAnimations];
+    [self removeFromSuperview];
 }
 
 @end

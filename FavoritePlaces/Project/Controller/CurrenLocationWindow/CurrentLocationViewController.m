@@ -15,10 +15,10 @@
 #import "KAContainerView.h"
 #import "KALogoButton.h"
 
-static const CGFloat kSpinnerPadding = 15.f;
 static const NSUInteger kSpinnerTag = 1000;
 
-@interface CurrentLocationViewController () <CLLocationManagerDelegate, CAAnimationDelegate>
+
+@interface CurrentLocationViewController () <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet KAContainerView *containerView;
 @property (weak, nonatomic) IBOutlet UIButton *getButton;
@@ -52,17 +52,6 @@ static const NSUInteger kSpinnerTag = 1000;
     [button addTarget:self action:@selector(getLocation:)
               forControlEvents:UIControlEventTouchUpInside];
     logoButton = button;
-}
-
-- (void) setupSpinner {
-    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    CGFloat xCoord = CGRectGetMidX(self.containerView.messageLabel.frame);
-    CGFloat yCoord = CGRectGetMidY(self.containerView.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + kSpinnerPadding;
-    CGPoint center = CGPointMake(xCoord, yCoord);
-    spinner.center = center;
-    [spinner startAnimating];
-    spinner.tag = kSpinnerTag;
-    [self.containerView addSubview:spinner];
 }
 
 #pragma mark - Methods
@@ -172,7 +161,7 @@ static const NSUInteger kSpinnerTag = 1000;
         [self.getButton setTitle:@"Stop" forState:UIControlStateNormal];
         
         if ([self.view viewWithTag:kSpinnerTag] == nil) {
-            [self setupSpinner];
+            [self.containerView spinnerWithTag:kSpinnerTag];
         }
     } else {
         [self.getButton setTitle:@"Get My Location" forState:UIControlStateNormal];
@@ -262,16 +251,8 @@ didFinishDeferredUpdatesWithError:(nullable NSError *)error {
     NSLog(@"visit: %@", visit);
 }
 
-#pragma mark - CAAnimationDelegate
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    
-    [self.containerView.layer removeAllAnimations];
-    self.containerView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2, 40.0 + CGRectGetHeight(self.containerView.bounds) / 2.0);
-    
-    [logoButton.layer removeAllAnimations];
-    [logoButton removeFromSuperview];
-}
+
 
 
 
