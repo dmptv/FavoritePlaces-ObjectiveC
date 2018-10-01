@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9D248590215D2EBF005D7B0D /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D24858F215D2EBF005D7B0D /* Theme.xcassets */; };
+		9D508C682161E44C0021DB0E /* KAContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D508C672161E44C0021DB0E /* KAContainerView.m */; };
+		9D508C8F2161EED70021DB0E /* KAContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D508C8E2161EED70021DB0E /* KAContainerView.xib */; };
+		9D508C922161EF260021DB0E /* CurrentLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D508C902161EF260021DB0E /* CurrentLocation.storyboard */; };
 		9D934AC62153F455006F8DCC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D934AC52153F455006F8DCC /* AppDelegate.m */; };
 		9D934ACC2153F455006F8DCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D934ACA2153F455006F8DCC /* Main.storyboard */; };
 		9D934AD12153F457006F8DCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D934AD02153F457006F8DCC /* Assets.xcassets */; };
@@ -57,6 +60,10 @@
 /* Begin PBXFileReference section */
 		9D24847921550F6E005D7B0D /* Sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sound.caf; sourceTree = "<group>"; };
 		9D24858F215D2EBF005D7B0D /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
+		9D508C662161E44C0021DB0E /* KAContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KAContainerView.h; sourceTree = "<group>"; };
+		9D508C672161E44C0021DB0E /* KAContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KAContainerView.m; sourceTree = "<group>"; };
+		9D508C8E2161EED70021DB0E /* KAContainerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KAContainerView.xib; sourceTree = "<group>"; };
+		9D508C912161EF260021DB0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = FavoritePlaces/Base.lproj/CurrentLocation.storyboard; sourceTree = "<group>"; };
 		9D934AC12153F455006F8DCC /* FavoritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavoritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D934AC42153F455006F8DCC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9D934AC52153F455006F8DCC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -137,6 +144,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D508C652161E4220021DB0E /* CurrenLocationWindow */ = {
+			isa = PBXGroup;
+			children = (
+				9D934B0A2153FE6E006F8DCC /* CurrentLocationViewController.h */,
+				9D934B0B2153FE6E006F8DCC /* CurrentLocationViewController.m */,
+				9D508C902161EF260021DB0E /* CurrentLocation.storyboard */,
+				9D508C662161E44C0021DB0E /* KAContainerView.h */,
+				9D508C672161E44C0021DB0E /* KAContainerView.m */,
+				9D508C8E2161EED70021DB0E /* KAContainerView.xib */,
+			);
+			path = CurrenLocationWindow;
+			sourceTree = "<group>";
+		};
 		9D934AB82153F455006F8DCC = {
 			isa = PBXGroup;
 			children = (
@@ -230,8 +250,7 @@
 		9D934AFC2153FD0A006F8DCC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9D934B0A2153FE6E006F8DCC /* CurrentLocationViewController.h */,
-				9D934B0B2153FE6E006F8DCC /* CurrentLocationViewController.m */,
+				9D508C652161E4220021DB0E /* CurrenLocationWindow */,
 				9D934B132153FEBB006F8DCC /* LocationDetailsViewController.h */,
 				9D934B142153FEBB006F8DCC /* LocationDetailsViewController.m */,
 				9D934B102153FE9B006F8DCC /* CategoryPickerViewController.h */,
@@ -422,6 +441,8 @@
 				9D248590215D2EBF005D7B0D /* Theme.xcassets in Resources */,
 				9D934AD12153F457006F8DCC /* Assets.xcassets in Resources */,
 				9D934ACC2153F455006F8DCC /* Main.storyboard in Resources */,
+				9D508C8F2161EED70021DB0E /* KAContainerView.xib in Resources */,
+				9D508C922161EF260021DB0E /* CurrentLocation.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +477,7 @@
 				9D934B30215401EB006F8DCC /* DataModel.xcdatamodeld in Sources */,
 				9D934B2421540003006F8DCC /* HudView.m in Sources */,
 				9D934B032153FD9F006F8DCC /* MyTabBarControllerViewController.m in Sources */,
+				9D508C682161E44C0021DB0E /* KAContainerView.m in Sources */,
 				9D934B2D21540189006F8DCC /* ModelController.m in Sources */,
 				9D934B152153FEBB006F8DCC /* LocationDetailsViewController.m in Sources */,
 				9DD3F51C215E2A46009A9DA0 /* CreditCard.m in Sources */,
@@ -503,6 +525,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9D508C902161EF260021DB0E /* CurrentLocation.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D508C912161EF260021DB0E /* Base */,
+			);
+			name = CurrentLocation.storyboard;
+			sourceTree = "<group>";
+		};
 		9D934ACA2153F455006F8DCC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

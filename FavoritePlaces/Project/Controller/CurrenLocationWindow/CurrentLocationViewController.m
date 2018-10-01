@@ -12,23 +12,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "UIViewController+Alert.h"
+#import "KAContainerView.h"
 
+static const CGFloat kSpinnerPadding = 15.f;
+static const NSUInteger kSpinnerTag = 1000;
 
 @interface CurrentLocationViewController () <CLLocationManagerDelegate, CAAnimationDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-@property (weak, nonatomic) IBOutlet UIButton *tagButton;
+@property (weak, nonatomic) IBOutlet KAContainerView *containerView;
 @property (weak, nonatomic) IBOutlet UIButton *getButton;
-@property (weak, nonatomic) IBOutlet UILabel *latitudeTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *longitudeTextLabel;
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-
-// animation logo
-@property (weak, nonatomic) UIButton *logoButton;
-@property (assign, nonatomic) BOOL logoVisible;
 
 // location
 @property (strong, nonatomic) CLLocationManager* locationManager;
@@ -38,8 +30,10 @@
 
 @end
 
-@implementation CurrentLocationViewController
-
+@implementation CurrentLocationViewController {
+    BOOL logoVisible;
+    UIButton* logoButton;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +41,6 @@
     self.locationManager = [[CLLocationManager alloc] init];
     
     [self updateLabels];
-    
 }
 
 #pragma mark - Helpers
@@ -62,7 +55,7 @@
     button.center = CGPointMake(CGRectGetMidX(self.view.bounds), 220.0);
     [self.view addSubview:button];
     
-    self.logoButton = button;
+    logoButton = button;
 }
 
 - (void) setContainerViewAnimation {
@@ -90,11 +83,11 @@
     [logoMover setRemovedOnCompletion:NO];
     logoMover.fillMode = kCAFillModeForwards;
     logoMover.duration = 0.5;
-    logoMover.fromValue = [NSValue valueWithCGPoint:self.logoButton.center];
-    logoMover.toValue = [NSValue valueWithCGPoint:CGPointMake(-CGRectGetMidX(self.view.bounds), self.logoButton.center.y)];
+    logoMover.fromValue = [NSValue valueWithCGPoint:logoButton.center];
+    logoMover.toValue = [NSValue valueWithCGPoint:CGPointMake(-CGRectGetMidX(self.view.bounds), logoButton.center.y)];
     logoMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
-    [self.logoButton.layer addAnimation:logoMover forKey:@"logoMover"];
+    [logoButton.layer addAnimation:logoMover forKey:@"logoMover"];
 }
 
 - (void) logoButtonRotateOutAnimation {
@@ -106,7 +99,7 @@
     logoRotator.toValue = @(M_PI * (-2));
     logoRotator.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
-    [self.logoButton.layer addAnimation:logoRotator forKey:@"logoRotator"];
+    [logoButton.layer addAnimation:logoRotator forKey:@"logoRotator"];
 }
 
 
@@ -139,10 +132,10 @@
 }
 
 - (void) showLogoView {
-    if (!self.logoVisible) {
-        self.logoVisible = YES;
-        self.containerView.hidden = YES;
-        if (!self.logoButton) {
+    if (!logoVisible) {
+        logoVisible = YES;
+//        self.containerView.hidden = YES;
+        if (!logoButton) {
             [self makeLogoButton];
         }
     }
@@ -150,8 +143,8 @@
 }
 
 - (void) hideLogoView {
-    if (!self.logoVisible) { return; }
-    self.logoVisible = NO;
+    if (!logoVisible) { return; }
+    logoVisible = NO;
     
     // containerView is placed outside the screen and moved to the center
     [self setContainerViewAnimation];
@@ -169,7 +162,7 @@
     
     CLAuthorizationStatus authStatus = [CLLocationManager authorizationStatus];
     
-    if (self.logoVisible) {
+    if (logoVisible) {
         [self hideLogoView];
     }
     
@@ -212,17 +205,18 @@
 }
 
 - (void) configureGetButton {
-    NSUInteger spinnerTag = 1000;
     
     if (self.updatingLocation) {
         [self.getButton setTitle:@"Stop" forState:UIControlStateNormal];
         
-        if ([self.view viewWithTag:spinnerTag] == nil) {
+        if ([self.view viewWithTag:kSpinnerTag] == nil) {
             UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-            CGPoint center = CGPointMake(CGRectGetMidX(self.messageLabel.frame), CGRectGetMidY(self.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + 15);
+            CGFloat xCoord = CGRectGetMidX(self.containerView.messageLabel.frame);
+            CGFloat yCoord = CGRectGetMidY(self.containerView.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + kSpinnerPadding;
+            CGPoint center = CGPointMake(xCoord, yCoord);
             spinner.center = center;
             [spinner startAnimating];
-            spinner.tag = spinnerTag;
+            spinner.tag = kSpinnerTag;
             [self.containerView addSubview:spinner];
         }
     } else {
@@ -318,8 +312,8 @@ didFinishDeferredUpdatesWithError:(nullable NSError *)error {
     [self.containerView.layer removeAllAnimations];
     self.containerView.center = CGPointMake(CGRectGetWidth(self.view.bounds) / 2, 40.0 + CGRectGetHeight(self.containerView.bounds) / 2.0);
     
-    [self.logoButton.layer removeAllAnimations];
-    [self.logoButton removeFromSuperview];
+    [logoButton.layer removeAllAnimations];
+    [logoButton removeFromSuperview];
 }
 
 
