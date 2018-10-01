@@ -185,13 +185,51 @@
         return;
     }
 
+    if (self.updatingLocation) {
+        [self stopLocationManager];
+    } else {
+        self.location = nil;
+        self.lastLocationError = nil;
+        [self startLocationManager];
+    }
     
-    
+    [self updateLabels];
+    [self configureGetButton];
  
 }
 
 - (void) startLocationManager {
     
+    if ([CLLocationManager locationServicesEnabled]) {
+        NSLog(@"enabld");
+    }
+    
+    
+}
+
+- (void) stopLocationManager {
+    NSLog(@"stop location manager");
+}
+
+- (void) configureGetButton {
+    NSUInteger spinnerTag = 1000;
+    
+    if (self.updatingLocation) {
+        [self.getButton setTitle:@"Stop" forState:UIControlStateNormal];
+        
+        if ([self.view viewWithTag:spinnerTag] == nil) {
+            UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+            CGPoint center = CGPointMake(CGRectGetMidX(self.messageLabel.frame), CGRectGetMidY(self.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + 15);
+            spinner.center = center;
+            [spinner startAnimating];
+            spinner.tag = spinnerTag;
+            [self.containerView addSubview:spinner];
+        }
+    } else {
+        [self.getButton setTitle:@"Get My Location" forState:UIControlStateNormal];
+        
+        
+    }
 }
 
 #pragma mark - CLLocationManagerDelegate
