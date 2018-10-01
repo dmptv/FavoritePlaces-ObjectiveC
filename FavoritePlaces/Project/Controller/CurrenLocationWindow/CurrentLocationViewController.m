@@ -13,6 +13,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "UIViewController+Alert.h"
 #import "KAContainerView.h"
+#import "KALogoButton.h"
 
 static const CGFloat kSpinnerPadding = 15.f;
 static const NSUInteger kSpinnerTag = 1000;
@@ -28,11 +29,12 @@ static const NSUInteger kSpinnerTag = 1000;
 @property (assign, nonatomic) BOOL updatingLocation;
 @property (strong, nonatomic) NSError* lastLocationError;
 
+
 @end
 
 @implementation CurrentLocationViewController {
     BOOL logoVisible;
-    UIButton* logoButton;
+    KALogoButton* logoButton;
 }
 
 - (void)viewDidLoad {
@@ -46,42 +48,22 @@ static const NSUInteger kSpinnerTag = 1000;
 #pragma mark - Helpers
 
 - (void) makeLogoButton {
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.tintColor = [UIColor colorNamed:@"tabbarTintcolor"];
-    [button setBackgroundImage:[UIImage imageNamed:@"Logo"] forState:UIControlStateNormal];
-    [button sizeToFit];
+    KALogoButton* button = [KALogoButton buttonWithType:UIButtonTypeCustom superView:self.view];
     [button addTarget:self action:@selector(getLocation:)
               forControlEvents:UIControlEventTouchUpInside];
-    button.center = CGPointMake(CGRectGetMidX(self.view.bounds), 220.0);
-    [self.view addSubview:button];
-    
     logoButton = button;
 }
 
-- (void) logoButtonSlideOutAnimation {
-    CABasicAnimation* logoMover = [CABasicAnimation animationWithKeyPath:@"position"];
-    [logoMover setRemovedOnCompletion:NO];
-    logoMover.fillMode = kCAFillModeForwards;
-    logoMover.duration = 0.5;
-    logoMover.fromValue = [NSValue valueWithCGPoint:logoButton.center];
-    logoMover.toValue = [NSValue valueWithCGPoint:CGPointMake(-CGRectGetMidX(self.view.bounds), logoButton.center.y)];
-    logoMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
-    [logoButton.layer addAnimation:logoMover forKey:@"logoMover"];
+- (void) setupSpinner {
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    CGFloat xCoord = CGRectGetMidX(self.containerView.messageLabel.frame);
+    CGFloat yCoord = CGRectGetMidY(self.containerView.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + kSpinnerPadding;
+    CGPoint center = CGPointMake(xCoord, yCoord);
+    spinner.center = center;
+    [spinner startAnimating];
+    spinner.tag = kSpinnerTag;
+    [self.containerView addSubview:spinner];
 }
-
-- (void) logoButtonRotateOutAnimation {
-    CABasicAnimation* logoRotator = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    [logoRotator setRemovedOnCompletion:NO];
-    logoRotator.fillMode = kCAFillModeForwards;
-    logoRotator.duration = 0.5;
-    logoRotator.fromValue = @0.0;
-    logoRotator.toValue = @(M_PI * (-2));
-    logoRotator.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
-    [logoButton.layer addAnimation:logoRotator forKey:@"logoRotator"];
-}
-
 
 #pragma mark - Methods
 
@@ -130,10 +112,10 @@ static const NSUInteger kSpinnerTag = 1000;
     [self.containerView setAnimationInSuperView:self.view];
     
     // logo button slides out of the screen
-    [self logoButtonSlideOutAnimation];
+    [logoButton slideOutAnimationInSuperview:self.view];
     
     // at the same time rotates around its center, giving impression that it’s rolling away
-    [self logoButtonRotateOutAnimation];
+    [logoButton rotateOutAnimation];
 }
 
 #pragma mark - Actions
@@ -190,14 +172,7 @@ static const NSUInteger kSpinnerTag = 1000;
         [self.getButton setTitle:@"Stop" forState:UIControlStateNormal];
         
         if ([self.view viewWithTag:kSpinnerTag] == nil) {
-            UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-            CGFloat xCoord = CGRectGetMidX(self.containerView.messageLabel.frame);
-            CGFloat yCoord = CGRectGetMidY(self.containerView.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + kSpinnerPadding;
-            CGPoint center = CGPointMake(xCoord, yCoord);
-            spinner.center = center;
-            [spinner startAnimating];
-            spinner.tag = kSpinnerTag;
-            [self.containerView addSubview:spinner];
+            [self setupSpinner];
         }
     } else {
         [self.getButton setTitle:@"Get My Location" forState:UIControlStateNormal];
@@ -205,6 +180,8 @@ static const NSUInteger kSpinnerTag = 1000;
         
     }
 }
+
+
 
 #pragma mark - CLLocationManagerDelegate
 

@@ -15,7 +15,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSLog(@"init with frame");
+
         [self commonInit];
     }
     return self;
@@ -25,7 +25,7 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        NSLog(@"init with coder");
+
         [self commonInit];
     }
     return self;
@@ -41,12 +41,12 @@
     UIViewAutoresizingFlexibleWidth;
 }
 
-- (void) setAnimationInSuperView:(UIView*) superView {
+- (void) setAnimationInSuperView:(UIView*) superview {
     self.contentView.hidden = NO;
-    CGFloat x = CGRectGetWidth(superView.bounds) * 2.0;
+    CGFloat x = CGRectGetWidth(superview.bounds) * 2.0;
     CGFloat y = 40 + CGRectGetHeight(self.contentView.bounds) / 2.0;
     self.contentView.center = CGPointMake(x, y);
-    CGFloat centerX = CGRectGetMidX(superView.bounds);
+    CGFloat centerX = CGRectGetMidX(superview.bounds);
     
     CABasicAnimation* panelMover = [CABasicAnimation animationWithKeyPath:@"position"];
     [panelMover setRemovedOnCompletion:NO];

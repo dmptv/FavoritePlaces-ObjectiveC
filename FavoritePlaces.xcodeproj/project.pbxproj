@@ -33,6 +33,7 @@
 		9D934B2A21540158006F8DCC /* NSString+AddText.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D934B2921540158006F8DCC /* NSString+AddText.m */; };
 		9D934B2D21540189006F8DCC /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D934B2C21540189006F8DCC /* ModelController.m */; };
 		9D934B30215401EB006F8DCC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D934B2E215401EB006F8DCC /* DataModel.xcdatamodeld */; };
+		9DABB94B2162257B00D03986 /* KALogoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DABB94A2162257B00D03986 /* KALogoButton.m */; };
 		9DD3F512215E1975009A9DA0 /* MyClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F511215E1975009A9DA0 /* MyClass.m */; };
 		9DD3F515215E208F009A9DA0 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F514215E208F009A9DA0 /* Constants.m */; };
 		9DD3F518215E2A1C009A9DA0 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F517215E2A1C009A9DA0 /* Person.m */; };
@@ -107,6 +108,8 @@
 		9D934B2B21540189006F8DCC /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
 		9D934B2C21540189006F8DCC /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
 		9D934B2F215401EB006F8DCC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		9DABB9492162257B00D03986 /* KALogoButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KALogoButton.h; sourceTree = "<group>"; };
+		9DABB94A2162257B00D03986 /* KALogoButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KALogoButton.m; sourceTree = "<group>"; };
 		9DD3F510215E1975009A9DA0 /* MyClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyClass.h; sourceTree = "<group>"; };
 		9DD3F511215E1975009A9DA0 /* MyClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyClass.m; sourceTree = "<group>"; };
 		9DD3F513215E208F009A9DA0 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -153,6 +156,8 @@
 				9D508C662161E44C0021DB0E /* KAContainerView.h */,
 				9D508C672161E44C0021DB0E /* KAContainerView.m */,
 				9D508C8E2161EED70021DB0E /* KAContainerView.xib */,
+				9DABB9492162257B00D03986 /* KALogoButton.h */,
+				9DABB94A2162257B00D03986 /* KALogoButton.m */,
 			);
 			path = CurrenLocationWindow;
 			sourceTree = "<group>";
@@ -485,6 +490,7 @@
 				9D934B182153FF14006F8DCC /* LocationsViewController.m in Sources */,
 				9D934B0C2153FE6E006F8DCC /* CurrentLocationViewController.m in Sources */,
 				9D934B1B2153FF2E006F8DCC /* LocationCell.m in Sources */,
+				9DABB94B2162257B00D03986 /* KALogoButton.m in Sources */,
 				9D934B092153FDF2006F8DCC /* MyImagePickerController.m in Sources */,
 				9D934B2721540085006F8DCC /* UIImage+Resize.m in Sources */,
 				9D934B2A21540158006F8DCC /* NSString+AddText.m in Sources */,
