@@ -27,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="330"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2w9-DM-8vI" userLabel="Container" customClass="KAContainerView" customModule="FavoritePlaces">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2w9-DM-8vI" userLabel="Contentview" customClass="KAContainerView" customModule="FavoritePlaces">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="330"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ypB-4H-W0K">

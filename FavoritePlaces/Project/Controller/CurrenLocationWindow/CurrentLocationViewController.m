@@ -58,26 +58,6 @@ static const NSUInteger kSpinnerTag = 1000;
     logoButton = button;
 }
 
-- (void) setContainerViewAnimation {
-    self.containerView.hidden = NO;
-    CGFloat x = CGRectGetWidth(self.view.bounds) * 2.0;
-    CGFloat y = 40 + CGRectGetHeight(self.containerView.bounds) / 2.0;
-    self.containerView.center = CGPointMake(x, y);
-    CGFloat centerX = CGRectGetMidX(self.view.bounds);
-    
-    CABasicAnimation* panelMover = [CABasicAnimation animationWithKeyPath:@"position"];
-    [panelMover setRemovedOnCompletion:NO];
-    panelMover.fillMode = kCAFillModeForwards;
-    panelMover.duration = 0.6;
-    panelMover.fromValue = [NSValue valueWithCGPoint:self.containerView.center];
-    panelMover.toValue = [NSValue valueWithCGPoint:CGPointMake(centerX, self.containerView.center.y)];
-    panelMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    __weak id weakSelf = self;
-    [panelMover setDelegate:weakSelf];
-    
-    [self.containerView.layer addAnimation:panelMover forKey:@"panelMover"];
-}
-
 - (void) logoButtonSlideOutAnimation {
     CABasicAnimation* logoMover = [CABasicAnimation animationWithKeyPath:@"position"];
     [logoMover setRemovedOnCompletion:NO];
@@ -134,7 +114,7 @@ static const NSUInteger kSpinnerTag = 1000;
 - (void) showLogoView {
     if (!logoVisible) {
         logoVisible = YES;
-//        self.containerView.hidden = YES;
+        self.containerView.hidden = YES;
         if (!logoButton) {
             [self makeLogoButton];
         }
@@ -147,7 +127,7 @@ static const NSUInteger kSpinnerTag = 1000;
     logoVisible = NO;
     
     // containerView is placed outside the screen and moved to the center
-    [self setContainerViewAnimation];
+    [self.containerView setAnimationInSuperView:self.view];
     
     // logo button slides out of the screen
     [self logoButtonSlideOutAnimation];

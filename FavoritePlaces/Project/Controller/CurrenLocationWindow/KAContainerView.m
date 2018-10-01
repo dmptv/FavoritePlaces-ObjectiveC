@@ -7,6 +7,7 @@
 //
 
 #import "KAContainerView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation KAContainerView
 
@@ -38,6 +39,26 @@
     _contentView.autoresizingMask =
     UIViewAutoresizingFlexibleHeight |
     UIViewAutoresizingFlexibleWidth;
+}
+
+- (void) setAnimationInSuperView:(UIView*) superView {
+    self.contentView.hidden = NO;
+    CGFloat x = CGRectGetWidth(superView.bounds) * 2.0;
+    CGFloat y = 40 + CGRectGetHeight(self.contentView.bounds) / 2.0;
+    self.contentView.center = CGPointMake(x, y);
+    CGFloat centerX = CGRectGetMidX(superView.bounds);
+    
+    CABasicAnimation* panelMover = [CABasicAnimation animationWithKeyPath:@"position"];
+    [panelMover setRemovedOnCompletion:NO];
+    panelMover.fillMode = kCAFillModeForwards;
+    panelMover.duration = 0.6;
+    panelMover.fromValue = [NSValue valueWithCGPoint:self.contentView.center];
+    panelMover.toValue = [NSValue valueWithCGPoint:CGPointMake(centerX, self.contentView.center.y)];
+    panelMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    __weak id weakSelf = self;
+    [panelMover setDelegate:weakSelf];
+    
+    [self.contentView.layer addAnimation:panelMover forKey:@"panelMover"];
 }
 
 @end
