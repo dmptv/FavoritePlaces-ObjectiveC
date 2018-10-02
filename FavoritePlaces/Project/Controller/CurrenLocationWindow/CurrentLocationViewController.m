@@ -14,20 +14,19 @@
 #import "UIViewController+Alert.h"
 #import "KAContainerView.h"
 #import "KALogoButton.h"
+#import "KALocationManager.h"
+
 
 static const NSUInteger kSpinnerTag = 1000;
 
-
-@interface CurrentLocationViewController () <CLLocationManagerDelegate>
+@interface CurrentLocationViewController ()
 
 @property (weak, nonatomic) IBOutlet KAContainerView *containerView;
 @property (weak, nonatomic) IBOutlet UIButton *getButton;
 
-// location
-@property (strong, nonatomic) CLLocationManager* locationManager;
-@property (strong, nonatomic) CLLocation* location;
-@property (assign, nonatomic) BOOL updatingLocation;
-@property (strong, nonatomic) NSError* lastLocationError;
+@property (strong, nonatomic) KALocationManager* locationManager;
+
+#pragma mark - TO DO - abstract  reverse-geocoding -> KALocationManager wiil request it from other class and then pass that geocoding data to view controller
 
 
 @end
@@ -40,7 +39,7 @@ static const NSUInteger kSpinnerTag = 1000;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager = [[KALocationManager alloc] init];
     
     [self updateLabels];
 }
@@ -58,20 +57,20 @@ static const NSUInteger kSpinnerTag = 1000;
 
 - (void) updateLabels {
     
-    if (self.location) {
+    if (self.locationManager.location) {
         
         NSLog(@"1");
         
     } else {
         
-        if (self.lastLocationError) {
+        if (self.locationManager.lastLocationError) {
             
             NSLog(@"2");
             
-        } else if (![CLLocationManager locationServicesEnabled]) {
+        } else if (![self.locationManager locationServicesEnabled]) {
             NSLog(@"3");
             
-        } else if (self.updatingLocation) {
+        } else if (self.locationManager.updatingLocation) {
             NSLog(@"4");
         } else {
             NSLog(@"5");
@@ -111,7 +110,7 @@ static const NSUInteger kSpinnerTag = 1000;
 
 - (IBAction) getLocation:(id)sender {
     
-    CLAuthorizationStatus authStatus = [CLLocationManager authorizationStatus];
+    CLAuthorizationStatus authStatus = [self.locationManager authorizationStatus];
     
     if (logoVisible) {
         [self hideLogoView];
@@ -129,12 +128,12 @@ static const NSUInteger kSpinnerTag = 1000;
         return;
     }
 
-    if (self.updatingLocation) {
-        [self stopLocationManager];
+    if (self.locationManager.updatingLocation) {
+        [self.locationManager stopLocationManager];
     } else {
-        self.location = nil;
-        self.lastLocationError = nil;
-        [self startLocationManager];
+        self.locationManager.location = nil;
+        self.locationManager.lastLocationError = nil;
+        [self.locationManager startLocationManager];
     }
     
     [self updateLabels];
@@ -142,22 +141,9 @@ static const NSUInteger kSpinnerTag = 1000;
  
 }
 
-- (void) startLocationManager {
-    
-    if ([CLLocationManager locationServicesEnabled]) {
-        NSLog(@"enabld");
-    }
-    
-    
-}
-
-- (void) stopLocationManager {
-    NSLog(@"stop location manager");
-}
-
 - (void) configureGetButton {
     
-    if (self.updatingLocation) {
+    if (self.locationManager.updatingLocation) {
         [self.getButton setTitle:@"Stop" forState:UIControlStateNormal];
         
         if ([self.view viewWithTag:kSpinnerTag] == nil) {
@@ -172,84 +158,6 @@ static const NSUInteger kSpinnerTag = 1000;
 
 
 
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error {
-    NSLog(@"didFailWithError %@", error.description);
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    NSLog(@"didUpdateLocations %@", locations.lastObject);
-
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-       didUpdateHeading:(CLHeading *)newHeading {
-    NSLog(@"didUpdateHeading %@", newHeading);
-}
-
-- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager {
-    NSLog(@"locationManagerShouldDisplayHeadingCalibration ");
-
-    return YES;
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-        didRangeBeacons:(NSArray<CLBeacon *> *)beacons {
-    NSLog(@"didRangeBeacons %@", beacons);
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region
-              withError:(NSError *)error {
-    NSLog(@"rangingBeaconsDidFailForRegion %@", error.description);
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-         didEnterRegion:(CLRegion *)region {
-     NSLog(@"didEnterRegion %@", region);
-}
-
-
-- (void)locationManager:(CLLocationManager *)manager
-          didExitRegion:(CLRegion *)region {
-    
-    NSLog(@"didExitRegion %@", region);
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-monitoringDidFailForRegion:(nullable CLRegion *)region
-              withError:(NSError *)error {
-    NSLog(@"monitoringDidFailForRegion %@", error.description);
-}
-
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    NSLog(@"didChangeAuthorizationStatus %d", status);
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-didStartMonitoringForRegion:(CLRegion *)region {
-    NSLog(@"didStartMonitoringForRegion %@", region);
-}
-
-- (void)locationManagerDidPauseLocationUpdates:(CLLocationManager *)manager {
-    NSLog(@"locationManagerDidPauseLocationUpdates");
-}
-
-- (void)locationManagerDidResumeLocationUpdates:(CLLocationManager *)manager {
-    NSLog(@"locationManagerDidResumeLocationUpdates");
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-didFinishDeferredUpdatesWithError:(nullable NSError *)error {
-    NSLog(@"didFinishDeferredUpdatesWithError %@", error.description);
-}
-
-- (void)locationManager:(CLLocationManager *)manager didVisit:(CLVisit *)visit {
-    NSLog(@"visit: %@", visit);
-}
 
 
 
