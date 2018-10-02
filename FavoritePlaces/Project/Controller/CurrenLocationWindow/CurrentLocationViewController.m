@@ -26,7 +26,7 @@ static const NSUInteger kSpinnerTag = 1000;
 
 @property (strong, nonatomic) KALocationManager* locationManager;
 
-#pragma mark - TO DO - abstract  reverse-geocoding -> KALocationManager wiil request it from other class and then pass that geocoding data to view controller
+// - TO DO - abstract  reverse-geocoding -> KALocationManager wiil request it from other class and then pass that geocoding data to view controller
 
 
 @end
@@ -40,6 +40,7 @@ static const NSUInteger kSpinnerTag = 1000;
     [super viewDidLoad];
 
     self.locationManager = [[KALocationManager alloc] init];
+    self.locationManager.delegate = self;
     
     [self updateLabels];
 }
@@ -56,6 +57,8 @@ static const NSUInteger kSpinnerTag = 1000;
 #pragma mark - Methods
 
 - (void) updateLabels {
+    
+    // - TO DO - implement labels
     
     if (self.locationManager.location) {
         
@@ -156,6 +159,17 @@ static const NSUInteger kSpinnerTag = 1000;
     }
 }
 
+#pragma mark - KALocationManagerDelegate
+
+- (void) updateLocation:(CLLocation*) location {
+    NSLog(@" ---> update location delegate");
+    [self updateLabels];
+}
+
+- (void) configureButtonWithError:(nullable NSError*) error {
+    NSLog(@" ---> configure button");
+    [self configureGetButton];
+}
 
 
 

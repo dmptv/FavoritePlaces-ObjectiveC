@@ -7,6 +7,8 @@
 //
 
 #import "KALocationManager.h"
+#import "KALocationManagerDelegate.h"
+
 
 @interface KALocationManager () <CLLocationManagerDelegate>
 

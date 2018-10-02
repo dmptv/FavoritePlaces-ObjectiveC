@@ -13,7 +13,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol KALocationManagerDelegate <NSObject>
-
 @required
 
 - (void) updateLocation:(CLLocation*) location;
