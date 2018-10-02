@@ -7,10 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol KALocationManagerDelegate <NSObject>
+
+@required
+
+- (void) updateLocation:(CLLocation*) location;
+
+@optional
+- (void) configureButtonWithError:(nullable NSError*) error;
 
 @end
 

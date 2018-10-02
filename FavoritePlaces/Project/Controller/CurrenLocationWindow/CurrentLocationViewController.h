@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KALocationManagerDelegate.h"
+
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CurrentLocationViewController : UIViewController
+@interface CurrentLocationViewController : UIViewController <KALocationManagerDelegate>
 
 
 @end

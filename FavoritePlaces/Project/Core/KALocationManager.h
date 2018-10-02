@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "KALocationManagerDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface KALocationManager : NSObject
 
@@ -17,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic, nullable) NSError* lastLocationError;
 @property (assign, nonatomic) BOOL updatingLocation;
 
+@property (weak, nonatomic) id<KALocationManagerDelegate> delegate;
 
 - (void) startLocationManager;
 

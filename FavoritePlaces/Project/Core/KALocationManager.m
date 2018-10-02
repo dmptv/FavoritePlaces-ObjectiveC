@@ -73,9 +73,11 @@
         [self stopLocationManager];
         
         self.lastLocationError = [NSError errorWithDomain:@"MY Location Error" code:1 userInfo:nil];
-        /// send message to Vew Controller
-        // updateLabels()
-        // configureGetButton()
+        
+        if (self.delegate) {
+            [self.delegate updateLocation:self.location];
+             [self.delegate configureButtonWithError:self.lastLocationError];
+        }
     }
 }
 
@@ -109,14 +111,17 @@
 - (void) setupLocation:(CLLocation* ) newLocation withDistance:(double ) distance {
     self.lastLocationError = nil;
     self.location = newLocation;
-    /// send message to VC
-    // updateLabels()
+    
+    if (self.delegate) {
+        [self.delegate updateLocation:self.location];
+    }
     
     if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
         [self stopLocationManager];
-        
-        /// send message to VC
-        // configureGetButton()
+
+        if (self.delegate) {
+            [self.delegate configureButtonWithError:nil];
+        }
         
         if (distance > 0) {
             /// performingReverseGeocoding = false
@@ -130,10 +135,11 @@
     
     if (timeInterval > 10) {
         [self stopLocationManager];
-        
-        /// send message to VC
-        // updateLabels()
-        // configureGetButton()
+
+        if (self.delegate) {
+            [self.delegate updateLocation:self.location];
+            [self.delegate configureButtonWithError:nil];
+        }
     }
 }
 
@@ -148,18 +154,16 @@
     NSLog(@"didFailWithError %@", error.description);
     
     if (error.code == kCLErrorLocationUnknown) {
-        // keep trying until find a location or
-        // receive a more serious error
         return;
     }
     
-    // In the case of such a more serious error
     self.lastLocationError = error;
     [self stopLocationManager];
     
-    /// send message to VC
-    // updateLabels()
-    // configureGetButton()
+    if (self.delegate) {
+        [self.delegate updateLocation:self.location];
+        [self.delegate configureButtonWithError:self.lastLocationError];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {

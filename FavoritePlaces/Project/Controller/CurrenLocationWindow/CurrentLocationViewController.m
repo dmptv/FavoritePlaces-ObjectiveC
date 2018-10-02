@@ -19,7 +19,7 @@
 
 static const NSUInteger kSpinnerTag = 1000;
 
-@interface CurrentLocationViewController ()
+@interface CurrentLocationViewController () 
 
 @property (weak, nonatomic) IBOutlet KAContainerView *containerView;
 @property (weak, nonatomic) IBOutlet UIButton *getButton;
@@ -155,6 +155,8 @@ static const NSUInteger kSpinnerTag = 1000;
         
     }
 }
+
+
 
 
 
