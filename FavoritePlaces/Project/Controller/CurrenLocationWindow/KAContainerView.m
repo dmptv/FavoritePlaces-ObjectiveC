@@ -12,18 +12,16 @@
 static const CGFloat kSpinnerPadding = 15.f;
 
 @interface KAContainerView () <CAAnimationDelegate>
+@property (weak, nonatomic) UIView* supView;
 
 @end
 
-@implementation KAContainerView {
-    UIView* superview;
-}
+@implementation KAContainerView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-
         [self commonInit];
     }
     return self;
@@ -35,35 +33,33 @@ static const CGFloat kSpinnerPadding = 15.f;
     if (self) {
 
         [self commonInit];
+        
+        
     }
     return self;
 }
 
 - (void) commonInit {
-    
     [NSBundle.mainBundle loadNibNamed:@"KAContainerView" owner:self options:nil];
-    [self addSubview:_contentView];
-    _contentView.frame = self.bounds;
-    _contentView.autoresizingMask =
-    UIViewAutoresizingFlexibleHeight |
-    UIViewAutoresizingFlexibleWidth;
+    [self addSubview:self.contentView];
+    self.contentView.frame = self.bounds;
 }
 
 - (void) setAnimationInSuperView:(UIView*) superview {
-    superview = superview;
+    self.supView = superview;
     
-    self.contentView.hidden = NO;
+    self.hidden = NO;
     CGFloat x = CGRectGetWidth(superview.bounds) * 2.0;
     CGFloat y = 40 + CGRectGetHeight(self.contentView.bounds) / 2.0;
-    self.contentView.center = CGPointMake(x, y);
-    CGFloat centerX = CGRectGetMidX(superview.bounds);
-    
+    self.center = CGPointMake(x, y);
+    CGFloat centerX = CGRectGetMidX(self.supView.bounds);
+
     CABasicAnimation* panelMover = [CABasicAnimation animationWithKeyPath:@"position"];
     [panelMover setRemovedOnCompletion:NO];
     panelMover.fillMode = kCAFillModeForwards;
     panelMover.duration = 0.6;
-    panelMover.fromValue = [NSValue valueWithCGPoint:self.contentView.center];
-    panelMover.toValue = [NSValue valueWithCGPoint:CGPointMake(centerX, self.contentView.center.y)];
+    panelMover.fromValue = [NSValue valueWithCGPoint:self.center];
+    panelMover.toValue = [NSValue valueWithCGPoint:CGPointMake(centerX, self.center.y)];
     panelMover.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     __weak id weakSelf = self;
     [panelMover setDelegate:weakSelf];
@@ -79,14 +75,17 @@ static const CGFloat kSpinnerPadding = 15.f;
     spinner.center = center;
     [spinner startAnimating];
     spinner.tag = tag;
-    [self.contentView addSubview:spinner];
+    [self addSubview:spinner];
 }
 
 #pragma mark - CAAnimationDelegate
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    
     [self.contentView.layer removeAllAnimations];
-    self.contentView.center = CGPointMake(CGRectGetWidth(superview.bounds) / 2, 40.0 + CGRectGetHeight(self.contentView.bounds) / 2.0);
+    self.center = CGPointMake(CGRectGetWidth(self.supView.bounds) / 2,
+                                          40.0 + CGRectGetHeight(self.contentView.bounds) / 2.0);
+    
 }
 
 @end

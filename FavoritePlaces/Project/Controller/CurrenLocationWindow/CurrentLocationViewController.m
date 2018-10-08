@@ -19,7 +19,7 @@
 
 static const NSUInteger kSpinnerTag = 1000;
 
-@interface CurrentLocationViewController () 
+@interface CurrentLocationViewController ()
 
 @property (weak, nonatomic) IBOutlet KAContainerView *containerView;
 @property (weak, nonatomic) IBOutlet UIButton *getButton;
@@ -28,7 +28,7 @@ static const NSUInteger kSpinnerTag = 1000;
 
 // - TO DO - abstract  reverse-geocoding -> KALocationManager wiil request it from other class and then pass that geocoding data to view controller
 
-
+    
 @end
 
 @implementation CurrentLocationViewController {
@@ -57,27 +57,41 @@ static const NSUInteger kSpinnerTag = 1000;
 #pragma mark - Methods
 
 - (void) updateLabels {
-    
-    // - TO DO - implement labels
-    
+
     if (self.locationManager.location) {
+        self.containerView.latitudeLabel.text = [NSString stringWithFormat:@"%.8f",
+                                                 self.locationManager.location.coordinate.latitude];
+        self.containerView.longitudeLabel.text = [NSString stringWithFormat:@"%.8f",
+                                                  self.locationManager.location.coordinate.longitude];
+        self.containerView.latitudeTextLabel.hidden = NO;
+        self.containerView.longitudeTextLabel.hidden = NO;
+        self.containerView.tagButton.hidden = NO;
+        self.containerView.messageLabel.text = @"";
         
-        NSLog(@"1");
+        //TODO: - get placemark
         
     } else {
-        
+        self.containerView.latitudeLabel.text = @"";
+        self.containerView.longitudeLabel.text = @"";
+        self.containerView.addressLabel.text = @"";
+        self.containerView.latitudeTextLabel.hidden = YES;
+        self.containerView.longitudeTextLabel.hidden = YES;
+        self.containerView.tagButton.hidden = YES;
+
+        NSString* statusMessage = @"";
         if (self.locationManager.lastLocationError) {
-            
-            NSLog(@"2");
-            
+            if (self.locationManager.lastLocationError.domain == kCLErrorDomain) {
+                statusMessage = @"Location Services Disabled";
+            } else {
+                statusMessage = @"Error Getting Location";
+            }
         } else if (![self.locationManager locationServicesEnabled]) {
-            NSLog(@"3");
+            statusMessage = @"Location Services Disabled";
             
         } else if (self.locationManager.updatingLocation) {
-            NSLog(@"4");
+            statusMessage = @"Searching...";
         } else {
-            NSLog(@"5");
-            
+            statusMessage = @"";
             [self showLogoView];
         }
     }
@@ -96,7 +110,10 @@ static const NSUInteger kSpinnerTag = 1000;
 }
 
 - (void) hideLogoView {
-    if (!logoVisible) { return; }
+    if (!logoVisible) {
+        return;
+    }
+    
     logoVisible = NO;
     
     // containerView is placed outside the screen and moved to the center
@@ -108,6 +125,7 @@ static const NSUInteger kSpinnerTag = 1000;
     // at the same time rotates around its center, giving impression that it’s rolling away
     [logoButton rotateOutAnimation];
 }
+
 
 #pragma mark - Actions
 
@@ -170,7 +188,6 @@ static const NSUInteger kSpinnerTag = 1000;
     NSLog(@" ---> configure button");
     [self configureGetButton];
 }
-
 
 
 

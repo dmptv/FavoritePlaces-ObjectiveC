@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KAContainerView : UIView
+
 @property (strong, nonatomic) IBOutlet UIView *contentView;
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
