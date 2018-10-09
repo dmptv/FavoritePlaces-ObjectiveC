@@ -15,6 +15,10 @@
 @property (strong, nonatomic) NSTimer* timer;
 @property (strong, nonatomic) CLLocationManager* locationManager;
 
+@property (assign, nonatomic) BOOL performingReverseGeocoding;
+@property (strong, nonatomic, nullable) NSError* lastGeocodingError;
+@property (strong, nonatomic, nullable) CLPlacemark* placemark;
+
 @end
 
 @implementation KALocationManager
@@ -25,6 +29,8 @@
     if (self) {
         _locationManager = [[CLLocationManager alloc] init];
         _updatingLocation = NO;
+        _geocoder = [[CLGeocoder alloc] init];
+        _performingReverseGeocoding = NO;
     }
     return self;
 }
@@ -78,7 +84,7 @@
         
         if (self.delegate) {
             [self.delegate updateLocation:self.location];
-             [self.delegate configureButtonWithError:self.lastLocationError];
+            [self.delegate configureButtonWithError:self.lastLocationError];
         }
     }
 }
@@ -104,7 +110,7 @@
     
     if (!self.location || self.location.horizontalAccuracy > newLocation.horizontalAccuracy) {
         [self setupLocation:newLocation withDistance:distance];
-        [self performGeocoding];
+        [self performGeocodingNewLocation:newLocation];
     } else if (distance < 1) {
         [self setupLocation:newLocation withDistanceAndTimeInterval:distance];
     }
@@ -126,7 +132,7 @@
         }
         
         if (distance > 0) {
-            /// performingReverseGeocoding = false
+            self.performingReverseGeocoding = NO;
         }
     }
 }
@@ -146,8 +152,70 @@
 }
 
 
-- (void) performGeocoding {
-    
+- (void) performGeocodingNewLocation:(CLLocation*) newLocation {
+    if (!self.performingReverseGeocoding) {
+
+        self.performingReverseGeocoding = YES;
+        self.adress = @"Searching for Address...";
+        
+        __weak KALocationManager* weakSealf = self;
+        
+        [self.geocoder
+         reverseGeocodeLocation:newLocation
+         completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+
+             weakSealf.lastGeocodingError = error;
+             
+             if (error) {
+                 weakSealf.adress = @"Error Finding Address";
+             }
+             
+             if ((error == nil) && ([placemarks count] > 0)) {
+                 
+                 weakSealf.placemark = [placemarks lastObject];
+                 weakSealf.adress = [self stringFromPlacemark:weakSealf.placemark];
+                 
+             } else if (placemarks == nil) {
+                 weakSealf.placemark = nil;
+                 weakSealf.adress = @"No Address Found";
+                 
+                 /// playSoundEffect
+             }
+             
+             weakSealf.performingReverseGeocoding = NO;
+             [weakSealf.delegate updateAddress];
+         }];
+        
+    }
+
+}
+
+- (NSString*) stringFromPlacemark:(CLPlacemark*) placemark {
+    if (placemark) {
+        NSMutableString* line1 = [[NSMutableString alloc] initWithString:@""];
+        if (placemark.subThoroughfare != nil) {
+            [line1 appendString:placemark.subThoroughfare];
+        }
+        if (placemark.thoroughfare != nil) {
+            [line1 appendFormat:@" %@", placemark.thoroughfare];
+        }
+        
+        NSMutableString* line2 =  [[NSMutableString alloc] initWithString:@""];
+        if (placemark.locality != nil) {
+            [line2 appendString:placemark.locality];
+        }
+        if (placemark.administrativeArea != nil) {
+            [line2 appendFormat:@" %@", placemark.administrativeArea];
+        }
+        if (placemark.postalCode != nil) {
+            [line2 appendFormat:@" %@", placemark.postalCode];
+        }
+        
+        [line1 appendFormat:@"\n%@", line2];
+        
+        return line1;
+    }
+    return nil;
 }
 
 #pragma mark - CLLocationManagerDelegate

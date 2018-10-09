@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic, nullable) NSError* lastLocationError;
 @property (assign, nonatomic) BOOL updatingLocation;
 
+@property (strong, nonatomic) CLGeocoder* geocoder;
+@property (strong, nonatomic) NSString* adress;
+
 @property (weak, nonatomic) id<KALocationManagerDelegate> delegate;
 
 - (void) startLocationManager;

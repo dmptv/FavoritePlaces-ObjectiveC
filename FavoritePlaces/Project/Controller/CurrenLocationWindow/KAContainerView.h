@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) setAnimationInSuperView:(UIView*) superView;
 - (void) spinnerWithTag:(NSUInteger) tag;
+- (void) stopSpinner:(NSUInteger) tag;
 
 @end
 

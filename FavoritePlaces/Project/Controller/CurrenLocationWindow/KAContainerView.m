@@ -68,15 +68,24 @@ static const CGFloat kSpinnerPadding = 15.f;
 }
 
 - (void) spinnerWithTag:(NSUInteger) tag {
-    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    CGFloat xCoord = CGRectGetMidX(self.messageLabel.frame);
-    CGFloat yCoord = CGRectGetMidY(self.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + kSpinnerPadding;
-    CGPoint center = CGPointMake(xCoord, yCoord);
-    spinner.center = center;
-    [spinner startAnimating];
-    spinner.tag = tag;
-    [self addSubview:spinner];
+    if (![self viewWithTag:tag]) {
+        UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        CGFloat xCoord = CGRectGetMidX(self.messageLabel.frame);
+        CGFloat yCoord = CGRectGetMidY(self.messageLabel.frame) + CGRectGetHeight(spinner.bounds) / 2 + kSpinnerPadding;
+        CGPoint center = CGPointMake(xCoord, yCoord);
+        spinner.center = center;
+        [spinner startAnimating];
+        spinner.tag = tag;
+        [self addSubview:spinner];
+    }
 }
+
+- (void) stopSpinner:(NSUInteger) tag {
+    UIActivityIndicatorView* spinner = (UIActivityIndicatorView*)[self viewWithTag:tag];
+    [spinner stopAnimating];
+    [spinner removeFromSuperview];
+}
+
 
 #pragma mark - CAAnimationDelegate
 

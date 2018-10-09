@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 - (void) updateLocation:(CLLocation*) location;
+- (void) updateAddress;
 
 @optional
 - (void) configureButtonWithError:(nullable NSError*) error;

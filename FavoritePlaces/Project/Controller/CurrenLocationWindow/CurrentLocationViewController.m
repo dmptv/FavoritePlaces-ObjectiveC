@@ -49,8 +49,9 @@ static const NSUInteger kSpinnerTag = 1000;
 
 - (void) makeLogoButton {
     KALogoButton* button = [KALogoButton buttonWithType:UIButtonTypeCustom superView:self.view];
-    [button addTarget:self action:@selector(getLocation:)
-              forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self
+               action:@selector(getLocation:)
+     forControlEvents:UIControlEventTouchUpInside];
     logoButton = button;
 }
 
@@ -67,8 +68,6 @@ static const NSUInteger kSpinnerTag = 1000;
         self.containerView.longitudeTextLabel.hidden = NO;
         self.containerView.tagButton.hidden = NO;
         self.containerView.messageLabel.text = @"";
-        
-        //TODO: - get placemark
         
     } else {
         self.containerView.latitudeLabel.text = @"";
@@ -173,23 +172,32 @@ static const NSUInteger kSpinnerTag = 1000;
     } else {
         [self.getButton setTitle:@"Get My Location" forState:UIControlStateNormal];
         
-        
+        [self.containerView stopSpinner:kSpinnerTag];
     }
 }
+
+
 
 #pragma mark - KALocationManagerDelegate
 
 - (void) updateLocation:(CLLocation*) location {
     NSLog(@" ---> update location delegate");
     [self updateLabels];
+    [self configureGetButton];
 }
 
 - (void) configureButtonWithError:(nullable NSError*) error {
     NSLog(@" ---> configure button");
     [self configureGetButton];
+    
 }
 
-
+- (void) updateAddress {
+    if (self.locationManager.location) {
+        self.containerView.addressLabel.text = self.locationManager.adress;
+    }
+    
+}
 
 
 
