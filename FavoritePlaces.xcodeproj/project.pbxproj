@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9D14EA732163A6610039018A /* KALocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D14EA722163A6610039018A /* KALocationManager.m */; };
 		9D248590215D2EBF005D7B0D /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D24858F215D2EBF005D7B0D /* Theme.xcassets */; };
+		9D328223216CFF2100287748 /* AudioEngin.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D328222216CFF2100287748 /* AudioEngin.m */; };
+		9D328224216DCCCB00287748 /* Beep.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9D24847921550F6E005D7B0D /* Beep.caf */; };
 		9D508C682161E44C0021DB0E /* KAContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D508C672161E44C0021DB0E /* KAContainerView.m */; };
 		9D508C8F2161EED70021DB0E /* KAContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D508C8E2161EED70021DB0E /* KAContainerView.xib */; };
 		9D508C922161EF260021DB0E /* CurrentLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D508C902161EF260021DB0E /* CurrentLocation.storyboard */; };
@@ -63,8 +65,10 @@
 		9D14EA712163A6610039018A /* KALocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KALocationManager.h; sourceTree = "<group>"; };
 		9D14EA722163A6610039018A /* KALocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KALocationManager.m; sourceTree = "<group>"; };
 		9D14EA752163C4AD0039018A /* KALocationManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KALocationManagerDelegate.h; sourceTree = "<group>"; };
-		9D24847921550F6E005D7B0D /* Sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sound.caf; sourceTree = "<group>"; };
+		9D24847921550F6E005D7B0D /* Beep.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Beep.caf; sourceTree = "<group>"; };
 		9D24858F215D2EBF005D7B0D /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
+		9D328221216CFF2100287748 /* AudioEngin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEngin.h; sourceTree = "<group>"; };
+		9D328222216CFF2100287748 /* AudioEngin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEngin.m; sourceTree = "<group>"; };
 		9D508C662161E44C0021DB0E /* KAContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KAContainerView.h; sourceTree = "<group>"; };
 		9D508C672161E44C0021DB0E /* KAContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KAContainerView.m; sourceTree = "<group>"; };
 		9D508C8E2161EED70021DB0E /* KAContainerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KAContainerView.xib; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				9D14EA752163C4AD0039018A /* KALocationManagerDelegate.h */,
 				9D14EA712163A6610039018A /* KALocationManager.h */,
 				9D14EA722163A6610039018A /* KALocationManager.m */,
+				9D328221216CFF2100287748 /* AudioEngin.h */,
+				9D328222216CFF2100287748 /* AudioEngin.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -250,7 +256,7 @@
 		9D934AFA2153FCDB006F8DCC /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				9D24847921550F6E005D7B0D /* Sound.caf */,
+				9D24847921550F6E005D7B0D /* Beep.caf */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -459,6 +465,7 @@
 			files = (
 				9D934AD42153F457006F8DCC /* LaunchScreen.storyboard in Resources */,
 				9D248590215D2EBF005D7B0D /* Theme.xcassets in Resources */,
+				9D328224216DCCCB00287748 /* Beep.caf in Resources */,
 				9D934AD12153F457006F8DCC /* Assets.xcassets in Resources */,
 				9D934ACC2153F455006F8DCC /* Main.storyboard in Resources */,
 				9D508C8F2161EED70021DB0E /* KAContainerView.xib in Resources */,
@@ -501,6 +508,7 @@
 				9D934B2D21540189006F8DCC /* ModelController.m in Sources */,
 				9D934B152153FEBB006F8DCC /* LocationDetailsViewController.m in Sources */,
 				9DD3F51C215E2A46009A9DA0 /* CreditCard.m in Sources */,
+				9D328223216CFF2100287748 /* AudioEngin.m in Sources */,
 				9D934B062153FDD7006F8DCC /* MyNavigationController.m in Sources */,
 				9D14EA732163A6610039018A /* KALocationManager.m in Sources */,
 				9D934B182153FF14006F8DCC /* LocationsViewController.m in Sources */,

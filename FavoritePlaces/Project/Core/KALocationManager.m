@@ -8,7 +8,7 @@
 
 #import "KALocationManager.h"
 #import "KALocationManagerDelegate.h"
-
+#import "AudioEngin.h"
 
 @interface KALocationManager () <CLLocationManagerDelegate>
 
@@ -18,6 +18,8 @@
 @property (assign, nonatomic) BOOL performingReverseGeocoding;
 @property (strong, nonatomic, nullable) NSError* lastGeocodingError;
 @property (strong, nonatomic, nullable) CLPlacemark* placemark;
+
+@property (strong, nonatomic) AudioEngin* audioEngin;
 
 @end
 
@@ -31,6 +33,7 @@
         _updatingLocation = NO;
         _geocoder = [[CLGeocoder alloc] init];
         _performingReverseGeocoding = NO;
+        _audioEngin = [[AudioEngin alloc] initSound];
     }
     return self;
 }
@@ -170,7 +173,14 @@
                  weakSealf.adress = @"Error Finding Address";
              }
              
+            
+             
              if ((error == nil) && ([placemarks count] > 0)) {
+                 
+                 if (weakSealf.placemark == nil) {
+                     // "FIRST TIME!"
+                     [weakSealf.audioEngin playSoundEffect];
+                 }
                  
                  weakSealf.placemark = [placemarks lastObject];
                  weakSealf.adress = [self stringFromPlacemark:weakSealf.placemark];
@@ -178,8 +188,6 @@
              } else if (placemarks == nil) {
                  weakSealf.placemark = nil;
                  weakSealf.adress = @"No Address Found";
-                 
-                 /// playSoundEffect
              }
              
              weakSealf.performingReverseGeocoding = NO;
